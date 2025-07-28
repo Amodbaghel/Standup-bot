@@ -1,0 +1,28 @@
+name: Discord Daily Reminder
+
+on:
+  schedule:
+    - cron: '30 12 * * 1-5' # Every Monday to Friday at 6:00 PM IST (12:30 UTC)
+  workflow_dispatch: # Optional: allows manual triggering
+
+jobs:
+  send-reminder:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run the Discord reminder bot
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+          DISCORD_CHANNEL_ID: ${{ secrets.DISCORD_CHANNEL_ID }}
+        run: python reminder_bot.py
