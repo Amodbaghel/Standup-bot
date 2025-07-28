@@ -2,8 +2,8 @@ name: Discord Daily Reminder
 
 on:
   schedule:
-    - cron: '30 12 * * 1-5'  # Runs at 12:30 UTC → 6:00 PM IST (Mon-Fri)
-  workflow_dispatch:         # Allows manual triggering from GitHub UI
+    - cron: '30 12 * * 1-5'  # 12:30 PM UTC → 6:00 PM IST (Mon to Fri)
+  workflow_dispatch:  # Allow manual triggering
 
 jobs:
   send-reminder:
@@ -18,8 +18,8 @@ jobs:
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install discord.py
+        run: pip install discord.py==2.3.2
 
       - name: Run the Discord reminder bot
         env:
